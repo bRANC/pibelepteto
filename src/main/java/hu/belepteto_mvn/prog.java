@@ -193,10 +193,10 @@ public class prog extends javax.swing.JFrame {
                                                 dbb.inn.fel("insert into ido values ('" + rfid + "','" + dbb.nev + "','" + dbb.idoegyseg + "');");
                                                 dbb.inn.fel("UPDATE tanar SET bent=0 WHERE rfid='" + rfid + "';");
                                             } catch (Exception e) {
-                                                pin2.pulse(6000, false);
+                                                pin2.pulse(4000, false);
                                                 e.printStackTrace();
                                             }
-                                            pin3.pulse(6000, false);
+                                            pin3.pulse(4000, false);
                                         } else {
                                             //  System.out.println(val+"  "+dbb.valt);
                                             dbb.valto = "bent";
@@ -207,9 +207,9 @@ public class prog extends javax.swing.JFrame {
                                                 dbb.inn.fel("UPDATE tanar SET bent=1 WHERE rfid='" + rfid.trim() + "';");
                                             } catch (Exception e) {
                                                 e.printStackTrace();
-                                                pin2.pulse(6000, false);
+                                                pin2.pulse(4000, false);
                                             }
-                                            pin1.pulse(6000, false);
+                                            pin1.pulse(4000, false);
                                         }
 
                                         jtenev.setText(dbb.nev);

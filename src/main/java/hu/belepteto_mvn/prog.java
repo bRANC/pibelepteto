@@ -77,6 +77,11 @@ public class prog extends javax.swing.JFrame {
         }
     }
 
+    // provision gpio pin #01 as an output pin and turn on
+    GpioPinDigitalOutput pin1;
+    GpioPinDigitalOutput pin2;
+    GpioPinDigitalOutput pin3;
+
     public void pi4jsetup() {
         try {
             System.out.println("<--Pi4J--> GPIO Control Example ... started.");
@@ -85,9 +90,9 @@ public class prog extends javax.swing.JFrame {
             final GpioController gpio = GpioFactory.getInstance();
 
             // provision gpio pin #01 as an output pin and turn on
-            final GpioPinDigitalOutput pin1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "MyLED", PinState.HIGH);
-            final GpioPinDigitalOutput pin2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "MyLED", PinState.HIGH);
-            final GpioPinDigitalOutput pin3 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "MyLED", PinState.HIGH);
+            pin1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Zöld", PinState.LOW);
+            pin2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Piros", PinState.LOW);
+            pin3 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "Sárga", PinState.LOW);
 
             // set shutdown state for this pin
             pin1.setShutdownOptions(true, PinState.LOW);
@@ -114,7 +119,6 @@ public class prog extends javax.swing.JFrame {
             System.out.println("--> GPIO state should be: OFF");
 
             //Thread.sleep(5000);
-
             // turn on gpio pin #01 for 1 second and then off
             System.out.println("--> GPIO state should be: ON for only 1 second");
             pin3.pulse(1000, true); // set second argument to 'true' use a blocking call
@@ -218,8 +222,10 @@ public class prog extends javax.swing.JFrame {
                                                 dbb.inn.fel("insert into ido values ('" + rfid + "','" + dbb.nev + "','" + dbb.idoegyseg + "');");
                                                 dbb.inn.fel("UPDATE tanar SET bent=0 WHERE rfid='" + rfid + "';");
                                             } catch (Exception e) {
+                                                pin2.pulse(30000, false);
                                                 e.printStackTrace();
                                             }
+                                            pin3.pulse(30000, false);
                                         } else {
                                             //  System.out.println(val+"  "+dbb.valt);
                                             dbb.valto = "bent";
@@ -230,7 +236,9 @@ public class prog extends javax.swing.JFrame {
                                                 dbb.inn.fel("UPDATE tanar SET bent=1 WHERE rfid='" + rfid.trim() + "';");
                                             } catch (Exception e) {
                                                 e.printStackTrace();
+                                                pin2.pulse(30000, false);
                                             }
+                                            pin1.pulse(30000, false);
                                         }
 
                                         jtenev.setText(dbb.nev);

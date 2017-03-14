@@ -27,7 +27,7 @@ public class indit {
     //suli pi "jdbc:mysql://localhost:3306/suliadtb", "root", "123456"
     //private String url = "jdbc:mysql://85.255.15.17/";   //TOMCAT
     private String url = "jdbc:mysql://localhost:3306/";   //TOMCAT
-    private boolean connected, connected_beleptet = false;
+    private boolean connected = false;
     private String error = "";
 
     //private Azonositas azonositas;
@@ -36,11 +36,11 @@ public class indit {
         try {
             Class.forName(driver).newInstance();
             this.conn = (Connection) DriverManager.getConnection(url + DBName + "?useUnicode=yes&characterEncoding=UTF-8", user, pw);//csatlakozás
-            connected_beleptet = true;
+            connected = true;
         } catch (Exception e) {
             //System.out.println("NO CONNECTION programdijak=(" + e + ")");
             error = e.toString();
-            connected_beleptet = false;
+            connected = false;
             System.out.println(e.toString());
         }
     }
@@ -57,8 +57,8 @@ public class indit {
     }
 
     public boolean conn_beleptet() {
-        if (connected_beleptet) {//díjakhoz sikerült e csatlakozni
-            return connected_beleptet;
+        if (connected) {//díjakhoz sikerült e csatlakozni
+            return connected;
         }
         //loginWindow.alert("Nem sikerült ellenőrizni a befizetéseket!");
         return false;

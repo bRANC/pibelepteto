@@ -98,36 +98,7 @@ public class prog extends javax.swing.JFrame {
             pin1.setShutdownOptions(true, PinState.LOW);
             pin2.setShutdownOptions(true, PinState.LOW);
             pin3.setShutdownOptions(true, PinState.LOW);
-            System.out.println("--> GPIO1 state should be: ON");
 
-            Thread.sleep(5000);
-
-            // turn off gpio pin #01
-            pin1.low();
-            System.out.println("--> GPIO1 state should be: OFF");
-
-            Thread.sleep(5000);
-
-            // toggle the current state of gpio pin #01 (should turn on)
-            pin2.toggle();
-            System.out.println("--> GPIO state should be: ON");
-
-            Thread.sleep(5000);
-
-            // toggle the current state of gpio pin #01  (should turn off)
-            pin2.toggle();
-            System.out.println("--> GPIO state should be: OFF");
-
-            //Thread.sleep(5000);
-            // turn on gpio pin #01 for 1 second and then off
-            System.out.println("--> GPIO state should be: ON for only 1 second");
-            pin3.pulse(1000, true); // set second argument to 'true' use a blocking call
-
-            // stop all GPIO activity/threads by shutting down the GPIO controller
-            // (this method will forcefully shutdown all GPIO monitoring threads and scheduled tasks)
-            gpio.shutdown();
-
-            System.out.println("Exiting ControlGpioExample");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -222,10 +193,10 @@ public class prog extends javax.swing.JFrame {
                                                 dbb.inn.fel("insert into ido values ('" + rfid + "','" + dbb.nev + "','" + dbb.idoegyseg + "');");
                                                 dbb.inn.fel("UPDATE tanar SET bent=0 WHERE rfid='" + rfid + "';");
                                             } catch (Exception e) {
-                                                pin2.pulse(30000, false);
+                                                pin2.pulse(6000, false);
                                                 e.printStackTrace();
                                             }
-                                            pin3.pulse(30000, false);
+                                            pin3.pulse(6000, false);
                                         } else {
                                             //  System.out.println(val+"  "+dbb.valt);
                                             dbb.valto = "bent";
@@ -236,9 +207,9 @@ public class prog extends javax.swing.JFrame {
                                                 dbb.inn.fel("UPDATE tanar SET bent=1 WHERE rfid='" + rfid.trim() + "';");
                                             } catch (Exception e) {
                                                 e.printStackTrace();
-                                                pin2.pulse(30000, false);
+                                                pin2.pulse(6000, false);
                                             }
-                                            pin1.pulse(30000, false);
+                                            pin1.pulse(6000, false);
                                         }
 
                                         jtenev.setText(dbb.nev);
@@ -268,33 +239,6 @@ public class prog extends javax.swing.JFrame {
             System.out.println("done usercheck");
         }
 
-    }
-
-    class bent extends SwingWorker<Void, Void> {
-
-        @Override
-        protected Void doInBackground() throws Exception {
-
-            return null;
-        }
-    }
-
-    class kint extends SwingWorker<Void, Void> {
-
-        @Override
-        protected Void doInBackground() throws Exception {
-
-            return null;
-        }
-    }
-
-    class hiba extends SwingWorker<Void, Void> {
-
-        @Override
-        protected Void doInBackground() throws Exception {
-
-            return null;
-        }
     }
 
     void varas(int ido) {

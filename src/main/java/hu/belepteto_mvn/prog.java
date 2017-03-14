@@ -85,13 +85,14 @@ public class prog extends javax.swing.JFrame {
             final GpioController gpio = GpioFactory.getInstance();
 
             // provision gpio pin #01 as an output pin and turn on
-            final GpioPinDigitalOutput pin1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_11, "MyLED", PinState.HIGH);
-            final GpioPinDigitalOutput pin2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_12, "MyLED", PinState.HIGH);
-            final GpioPinDigitalOutput pin3 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_13, "MyLED", PinState.HIGH);
+            final GpioPinDigitalOutput pin1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "MyLED", PinState.HIGH);
+            final GpioPinDigitalOutput pin2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "MyLED", PinState.HIGH);
+            final GpioPinDigitalOutput pin3 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "MyLED", PinState.HIGH);
 
             // set shutdown state for this pin
             pin1.setShutdownOptions(true, PinState.LOW);
-
+            pin2.setShutdownOptions(true, PinState.LOW);
+            pin3.setShutdownOptions(true, PinState.LOW);
             System.out.println("--> GPIO1 state should be: ON");
 
             Thread.sleep(5000);

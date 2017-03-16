@@ -209,6 +209,9 @@
               </Constraints>
             </Component>
             <Component class="javax.swing.JTextField" name="jTnev">
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTnevKeyPressed"/>
+              </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
                   <GridBagConstraints gridX="0" gridY="4" gridWidth="3" gridHeight="1" fill="0" ipadX="250" ipadY="0" insetsTop="7" insetsLeft="10" insetsBottom="5" insetsRight="5" anchor="18" weightX="0.0" weightY="0.0"/>

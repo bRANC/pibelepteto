@@ -405,6 +405,12 @@ public class prog extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 10, 5, 5);
         jPanel2.add(jToszta, gridBagConstraints);
+
+        jTnev.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTnevKeyPressed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -526,17 +532,47 @@ public class prog extends javax.swing.JFrame {
     }//GEN-LAST:event_rfidkeresActionPerformed
 
     private void nevkeresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nevkeresActionPerformed
+        nevkeres();
+    }//GEN-LAST:event_nevkeresActionPerformed
+
+    private void jTnevKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTnevKeyPressed
+        nevkeres.setText("keres");
+    }//GEN-LAST:event_jTnevKeyPressed
+    ResultSet rs2;
+    String nev = "";
+
+    public void kovetketzonev() {
         try {
-            ResultSet rs = dbb.inn.le("Select * from tanar where nev='" + jTnev.getText().trim() + "';");
-            while (rs.next()) {
-                jtrfid.setText(rs.getString("rfid"));
-                jToszta.setText(rs.getString("osztalyid"));
-                jTszak.setText(rs.getString("szak"));
+            if (rs2.next()) {
+                nevkeres.setText("következő");
+            } else {
+                nevkeres.setText("keres");
+                nev = "";
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
-    }//GEN-LAST:event_nevkeresActionPerformed
+
+    }
+
+    public void nevkeres() {
+        if (nev.equals(jTnev.getText().trim())) {
+            kovetketzonev();
+        } else {
+            try {
+                nev = jTnev.getText().trim();
+                rs2 = dbb.inn.le("Select * from tanar where nev='" + jTnev.getText().trim() + "';");
+                kovetketzonev();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            jtrfid.setText(rs2.getString("rfid"));
+            jToszta.setText(rs2.getString("osztalyid"));
+            jTszak.setText(rs2.getString("szak"));
+        } catch (Exception e) {
+        }
+    }
 
     /**
      * @param args the command line arguments

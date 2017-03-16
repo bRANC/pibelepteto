@@ -529,7 +529,7 @@ public class prog extends javax.swing.JFrame {
         try {
             ResultSet rs = dbb.inn.le("Select * from tanar where nev='" + jTnev.getText().trim() + "';");
             while (rs.next()) {
-                jtrfid.setText(rs.getString("nev"));
+                jtrfid.setText(rs.getString("rfid"));
                 jToszta.setText(rs.getString("osztalyid"));
                 jTszak.setText(rs.getString("szak"));
             }

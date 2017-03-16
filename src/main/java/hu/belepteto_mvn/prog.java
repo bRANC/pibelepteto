@@ -128,10 +128,12 @@ public class prog extends javax.swing.JFrame {
             } else {
                 System.out.println("nemsikerült.");
                 szam++;
+                pin2.pulse(4000, false);
                 if (szam == portok.length) {
                     next = false;
                     alert("Nem található leolvasó.");
                     System.out.println("nemsikerült és el fogytak a portok");
+                    
                 }
             }
         }
@@ -150,18 +152,22 @@ public class prog extends javax.swing.JFrame {
 
                         dbb.ido();
                         jteideo.setText(dbb.idoegyseg);
+
                         boolean mehet = true;
                         try {
                             rfid = (data.nextLine()).trim();
-
-                            for (int i = 0; i < deb.size(); i++) {
-                                if (deb.get(i).rfid.equals(rfid)) {
-                                    if (deb.get(i).torolheto()) {
-                                        deb.remove(i);
-                                    } else {
-                                        mehet = false;
+                            if (rfid.length() >= 3 && !rfid.contains("RFID")) {
+                                for (int i = 0; i < deb.size(); i++) {
+                                    if (deb.get(i).rfid.equals(rfid)) {
+                                        if (deb.get(i).torolheto()) {
+                                            deb.remove(i);
+                                        } else {
+                                            mehet = false;
+                                        }
                                     }
                                 }
+                            } else {
+                                mehet = false;
                             }
 
                             //   System.out.println(dbb.ora);

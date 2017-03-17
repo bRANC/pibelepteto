@@ -202,7 +202,7 @@ public class prog extends javax.swing.JFrame {
                                             dbb.valto = "kint";
                                             dbb.add_log(rfid);
                                             try {
-                                                dbb.inn.fel("insert into ido values ('" + rfid + "','" + dbb.nev + "','" + dbb.idoegyseg + "','bent');");
+                                                dbb.inn.fel("insert into ido values ('" + rfid + "','" + dbb.nev + "','" + dbb.idoegyseg + "','kint');");
                                                 dbb.inn.fel("UPDATE tanar SET bent=0 WHERE rfid='" + rfid + "';");
                                             } catch (Exception e) {
                                                 pin2.pulse(4000, false);

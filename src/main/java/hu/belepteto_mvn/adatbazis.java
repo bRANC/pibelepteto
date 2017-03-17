@@ -109,7 +109,11 @@ public class adatbazis {
                 n = rs.getString("nev");
                 idos1 = rs.getString("ido");
                 idod = idos1.substring(0, 10);
-                String helyzet = rs.getString("helyzet");
+                String helyzet = "";
+                try {
+                    helyzet = rs.getString("helyzet");
+                } catch (Exception e) {
+                }
                 //System.out.println(idod);
                 if (jelen.equals(idod)) {
                     logg.add(new log(rfi, n, idos1, helyzet));

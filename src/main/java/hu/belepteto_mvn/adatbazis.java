@@ -158,9 +158,10 @@ public class adatbazis {
             String ir = "";
 
             ir = logg.stream().map((logg1) -> logg1.write).reduce(ir, String::concat);
-
-            try (BufferedWriter mentt = new BufferedWriter(new FileWriter("/home/pi/Desktop/mentes/" + idoegyseg.substring(0, 10) + ".txt"))) {
+            try {
+                BufferedWriter mentt = new BufferedWriter(new FileWriter("/home/pi/Desktop/mentes/" + idoegyseg.substring(0, 10) + ".txt"));
                 mentt.write(ir);
+            } catch (Exception e) {
             }
             System.out.println("mentve");
             me = true;

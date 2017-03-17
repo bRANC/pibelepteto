@@ -120,7 +120,13 @@ public class prog extends javax.swing.JFrame {
                 System.out.println("sikerült kapcsolodni.");
                 next = false;
                 //Instant start = Instant.now();
+                pin1.pulse(50, false);
+                pin2.pulse(50, false);
+                pin3.pulse(50, false);
                 varas(100);
+                pin1.pulse(2000, false);
+                pin2.pulse(2000, false);
+                pin3.pulse(2000, false);
                 be.execute();
 //                while (Duration.between(start, Instant.now()).toMillis() < 100) {
 //                }
@@ -133,7 +139,7 @@ public class prog extends javax.swing.JFrame {
                     next = false;
                     alert("Nem található leolvasó.");
                     System.out.println("nemsikerült és el fogytak a portok");
-                    
+
                 }
             }
         }
@@ -178,7 +184,7 @@ public class prog extends javax.swing.JFrame {
                             System.out.println("serial: " + rfid);
                             deb.add(new debounce(rfid));
 
-                            if (Integer.parseInt(dbb.ora) > 5 && Integer.parseInt(dbb.ora) < 22) {
+                            if (Integer.parseInt(dbb.ora) >= 5 && Integer.parseInt(dbb.ora) < 22) {
                                 jterfid.setText(rfid);//jtextfield
                                 jtrfid.setText(rfid);//jtextinput
                                 dbb.me = false;
@@ -196,7 +202,7 @@ public class prog extends javax.swing.JFrame {
                                             dbb.valto = "kint";
                                             dbb.add_log(rfid);
                                             try {
-                                                dbb.inn.fel("insert into ido values ('" + rfid + "','" + dbb.nev + "','" + dbb.idoegyseg + "');");
+                                                dbb.inn.fel("insert into ido values ('" + rfid + "','" + dbb.nev + "','" + dbb.idoegyseg + "','bent');");
                                                 dbb.inn.fel("UPDATE tanar SET bent=0 WHERE rfid='" + rfid + "';");
                                             } catch (Exception e) {
                                                 pin2.pulse(4000, false);
@@ -209,7 +215,7 @@ public class prog extends javax.swing.JFrame {
                                             dbb.add_log(rfid);
                                             dbb.mentes += rfid + " " + dbb.nev + " " + dbb.idoegyseg + " bent,\n";
                                             try {
-                                                dbb.inn.fel("insert into ido values ('" + rfid.trim() + "','" + dbb.nev + "','" + dbb.idoegyseg + "')");
+                                                dbb.inn.fel("insert into ido values ('" + rfid.trim() + "','" + dbb.nev + "','" + dbb.idoegyseg + "','bent')");
                                                 dbb.inn.fel("UPDATE tanar SET bent=1 WHERE rfid='" + rfid.trim() + "';");
                                             } catch (Exception e) {
                                                 e.printStackTrace();
@@ -224,6 +230,8 @@ public class prog extends javax.swing.JFrame {
                                         rfid = "";
                                     } else {
                                         serialPort.getOutputStream().write('2');
+                                        pin2.pulse(2000, false);
+                                        pin3.pulse(2000, false);
                                     }
                                 }
                             } else {//
@@ -239,7 +247,6 @@ public class prog extends javax.swing.JFrame {
                 }
             }
         }
-
         @Override
         protected void done() {
             System.out.println("done usercheck");

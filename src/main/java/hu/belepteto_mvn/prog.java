@@ -184,11 +184,15 @@ public class prog extends javax.swing.JFrame {
                             System.out.println("serial: " + rfid);
                             deb.add(new debounce(rfid));
 
-                            if (Integer.parseInt(dbb.ora) >= 5 && Integer.parseInt(dbb.ora) < 22) {
+                            if (Integer.parseInt(dbb.ora) > 5 && Integer.parseInt(dbb.ora) < 22) {
                                 jterfid.setText(rfid);//jtextfield
                                 jtrfid.setText(rfid);//jtextinput
                                 dbb.me = false;
                                 dbb.nev_rfid("select * from tanar where rfid like \"" + rfid.trim() + "\";");
+                                while (!dbb.inn.conn()) {
+                                    varas(200);
+                                    System.out.println("kecse");
+                                }
                                 //     dbb.rfidell("select rfid from tanar where rfid='"+val+"';");
                                 if (rfid.length() > 6) {
                                     if (!dbb.nev.equals("")) {
@@ -234,12 +238,12 @@ public class prog extends javax.swing.JFrame {
                                         pin3.pulse(2000, false);
                                     }
                                 }
-                            } else {//
-                                rfid = "";
-                                if (dbb.me == false) {
-                                    dbb.bentmaradtak();
-                                }
                             }
+                        }
+                    }
+                    if (Integer.parseInt(dbb.ora) < 5 && Integer.parseInt(dbb.ora) > 22) {
+                        if (dbb.me == false) {
+                            dbb.bentmaradtak();
                         }
                     }
                 } catch (Exception e) {
@@ -247,6 +251,7 @@ public class prog extends javax.swing.JFrame {
                 }
             }
         }
+
         @Override
         protected void done() {
             System.out.println("done usercheck");

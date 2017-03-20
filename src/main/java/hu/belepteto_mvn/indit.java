@@ -30,7 +30,6 @@ public class indit {
     private boolean connected = false;
     private String error = "";
 
-    //private Azonositas azonositas;
     public void startConnection() {
         String driver = "com.mysql.jdbc.Driver";
         try {
@@ -38,7 +37,6 @@ public class indit {
             this.conn = (Connection) DriverManager.getConnection(url + DBName + "?useUnicode=yes&characterEncoding=UTF-8", user, pw);//csatlakozás
             connected = true;
         } catch (Exception e) {
-            //System.out.println("NO CONNECTION programdijak=(" + e + ")");
             error = e.toString();
             connected = false;
             System.out.println(e.toString());
@@ -49,18 +47,9 @@ public class indit {
      * @return vissza adja hogy az sql csatlakozva van-e
      */
     public boolean conn() {
-        if (connected) {//díjakhoz sikerült e csatlakozni
+        if (connected) {
             return connected;
         }
-        //loginWindow.alert("Nem sikerült bejelentkezni!");
-        return false;
-    }
-
-    public boolean conn_beleptet() {
-        if (connected) {//díjakhoz sikerült e csatlakozni
-            return connected;
-        }
-        //loginWindow.alert("Nem sikerült ellenőrizni a befizetéseket!");
         return false;
     }
 
@@ -89,18 +78,7 @@ public class indit {
     public void disconn() {
         try {
             conn.close();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(indit.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public void disconn_beleptet() {
-        try {
-            conn.close();
-
+            connected = false;
         } catch (SQLException ex) {
             Logger.getLogger(indit.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -114,10 +92,9 @@ public class indit {
 
     public ResultSet le(String sql) throws SQLException {
         ResultSet rs;
+        check_conn();
         //create the java statement
         java.sql.Statement st = this.conn.createStatement();
-        //System.out.println("indit le USER: " + sql); //_________________________________________ALL SQL
-
         rs = st.executeQuery(sql);
         return rs;
 
@@ -125,10 +102,21 @@ public class indit {
 
     public void fel(String sql) throws SQLException {
         ResultSet rs;
+        check_conn();
         //create the java statement
         java.sql.Statement st = this.conn.createStatement();
         //System.out.println("indit le USER: " + sql); //_________________________________________ALL SQL
         st.executeUpdate(sql);
+    }
+
+    public void check_conn() {
+        try {
+            if (!conn.isValid(5)) {
+                disconn();
+                startConnection();
+            }
+        } catch (Exception e) {
+        }
     }
 
     public String getUsername() {

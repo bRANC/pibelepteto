@@ -241,7 +241,7 @@ public class prog extends javax.swing.JFrame {
                             }
                         }
                     }
-                    if (Integer.parseInt(dbb.ora) < 5 && Integer.parseInt(dbb.ora) > 22) {
+                    if (Integer.parseInt(dbb.ora) < 5 || Integer.parseInt(dbb.ora) > 22) {
                         if (dbb.me == false) {
                             dbb.bentmaradtak();
                         }

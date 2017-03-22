@@ -153,10 +153,10 @@ public class prog extends javax.swing.JFrame {
             while (true) {
                 Scanner data = new Scanner(serialPort.getInputStream());
                 String val1 = "", rfid = "";
+                dbb.ido();
                 try {
                     while (data.hasNextLine()) {
 
-                        dbb.ido();
                         jteideo.setText(dbb.idoegyseg);
 
                         boolean mehet = true;

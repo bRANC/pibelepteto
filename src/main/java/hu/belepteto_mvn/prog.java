@@ -64,7 +64,10 @@ public class prog extends javax.swing.JFrame {
      */
     public prog() {
         initComponents();
-        pi4jsetup();
+        try {
+            pi4jsetup();
+        } catch (Exception e) {
+        }
         dbb = new adatbazis();
         dbb.mysqlbeolv();
         if (!dbb.inn.conn()) {
@@ -120,13 +123,16 @@ public class prog extends javax.swing.JFrame {
                 System.out.println("sikerült kapcsolodni.");
                 next = false;
                 //Instant start = Instant.now();
-                pin1.pulse(50, false);
-                pin2.pulse(50, false);
-                pin3.pulse(50, false);
-                varas(100);
-                pin1.pulse(2000, false);
-                pin2.pulse(2000, false);
-                pin3.pulse(2000, false);
+                try {
+                    pin1.pulse(50, false);
+                    pin2.pulse(50, false);
+                    pin3.pulse(50, false);
+                    varas(100);
+                    pin1.pulse(2000, false);
+                    pin2.pulse(2000, false);
+                    pin3.pulse(2000, false);
+                } catch (Exception e) {
+                }
                 be.execute();
 //                while (Duration.between(start, Instant.now()).toMillis() < 100) {
 //                }
@@ -154,11 +160,10 @@ public class prog extends javax.swing.JFrame {
                 Scanner data = new Scanner(serialPort.getInputStream());
                 String val1 = "", rfid = "";
                 dbb.ido();
+                pontosido.setText(dbb.idoegyseg);
                 try {
                     while (data.hasNextLine()) {
-
-                        jteideo.setText(dbb.idoegyseg);
-
+                        System.out.println("data");
                         boolean mehet = true;
                         try {
                             rfid = (data.nextLine()).trim();
@@ -181,17 +186,19 @@ public class prog extends javax.swing.JFrame {
                             e.printStackTrace();
                         }
                         if (mehet) {
+                            
                             System.out.println("serial: " + rfid);
                             deb.add(new debounce(rfid));
-
+                            //System.out.println("data2" + (Integer.parseInt(dbb.ora) < 5) + "  " + (Integer.parseInt(dbb.ora) > 22)+ " "+(true || (Integer.parseInt(dbb.ora) > 22)));
                             if (Integer.parseInt(dbb.ora) > 5 && Integer.parseInt(dbb.ora) < 22) {
                                 jterfid.setText(rfid);//jtextfield
                                 jtrfid.setText(rfid);//jtextinput
+                                
                                 dbb.me = false;
                                 dbb.nev_rfid("select * from tanar where rfid like \"" + rfid.trim() + "\";");
                                 while (!dbb.inn.conn()) {
                                     varas(200);
-                                    System.out.println("kecse");
+                                    //System.out.println("kecse");
                                 }
                                 //     dbb.rfidell("select rfid from tanar where rfid='"+val+"';");
                                 if (rfid.length() > 6) {
@@ -227,7 +234,8 @@ public class prog extends javax.swing.JFrame {
                                             }
                                             pin1.pulse(4000, false);
                                         }
-
+                                        
+                                        jteideo.setText(dbb.idoegyseg);
                                         jtenev.setText(dbb.nev);
                                         jteallapot.setText(dbb.valto);
                                         dbb.nev = "";
@@ -241,8 +249,10 @@ public class prog extends javax.swing.JFrame {
                             }
                         }
                     }
+                    System.out.println("data2" + (Integer.parseInt(dbb.ora) < 5) + "  " + (Integer.parseInt(dbb.ora) > 22));
                     if (Integer.parseInt(dbb.ora) < 5 || Integer.parseInt(dbb.ora) > 22) {
                         if (dbb.me == false) {
+                            System.out.println("data3");
                             dbb.bentmaradtak();
                         }
                     }
@@ -286,6 +296,8 @@ public class prog extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        pontosido = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -345,7 +357,7 @@ public class prog extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel1.add(jterfid, gridBagConstraints);
 
-        jLabel1.setText("Idő:");
+        jLabel1.setText("helyzet változás idő:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -376,6 +388,21 @@ public class prog extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_END;
         gridBagConstraints.insets = new java.awt.Insets(50, 5, 0, 5);
         jPanel1.add(jLabel4, gridBagConstraints);
+
+        pontosido.setText("\"pontosidő\"");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel1.add(pontosido, gridBagConstraints);
+
+        jLabel10.setText("Jelenlegi idő:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
+        jPanel1.add(jLabel10, gridBagConstraints);
 
         jTabbedPane4.addTab("Alap", jPanel1);
 
@@ -631,6 +658,7 @@ public class prog extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -650,6 +678,7 @@ public class prog extends javax.swing.JFrame {
     public javax.swing.JLabel jterfid;
     public javax.swing.JTextField jtrfid;
     private javax.swing.JButton nevkeres;
+    private javax.swing.JLabel pontosido;
     private javax.swing.JButton rfidkeres;
     // End of variables declaration//GEN-END:variables
 }

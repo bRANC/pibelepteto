@@ -28,7 +28,10 @@ public class adatbazis {
     indit inn = new indit();
 
     public adatbazis() {
-        inn.startConnection();
+        try {
+            inn.startConnection();
+        } catch (Exception e) {
+        }
     }
 
     public void nev_rfid(String sql) {

@@ -163,11 +163,12 @@ public class prog extends javax.swing.JFrame {
                 pontosido.setText(dbb.idoegyseg);
                 try {
                     while (data.hasNextLine()) {
-                        System.out.println("data");
+                        System.out.println("data: " + data);
                         boolean mehet = true;
                         try {
                             rfid = (data.nextLine()).trim();
-                            if (rfid.length() >= 3 && !rfid.contains("RFID")) {
+                            if (rfid.length() >= 3 && rfid.contains("RFID:")) {
+                                rfid = rfid.replace("RFID: ", "");
                                 for (int i = 0; i < deb.size(); i++) {
                                     if (deb.get(i).rfid.equals(rfid)) {
                                         if (deb.get(i).torolheto()) {
@@ -186,14 +187,14 @@ public class prog extends javax.swing.JFrame {
                             e.printStackTrace();
                         }
                         if (mehet) {
-                            
+
                             System.out.println("serial: " + rfid);
                             deb.add(new debounce(rfid));
                             //System.out.println("data2" + (Integer.parseInt(dbb.ora) < 5) + "  " + (Integer.parseInt(dbb.ora) > 22)+ " "+(true || (Integer.parseInt(dbb.ora) > 22)));
                             if (Integer.parseInt(dbb.ora) > 5 && Integer.parseInt(dbb.ora) < 22) {
                                 jterfid.setText(rfid);//jtextfield
                                 jtrfid.setText(rfid);//jtextinput
-                                
+
                                 dbb.me = false;
                                 dbb.nev_rfid("select * from tanar where rfid like \"" + rfid.trim() + "\";");
                                 while (!dbb.inn.conn()) {
@@ -234,7 +235,7 @@ public class prog extends javax.swing.JFrame {
                                             }
                                             pin1.pulse(4000, false);
                                         }
-                                        
+
                                         jteideo.setText(dbb.idoegyseg);
                                         jtenev.setText(dbb.nev);
                                         jteallapot.setText(dbb.valto);

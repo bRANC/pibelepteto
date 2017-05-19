@@ -172,6 +172,7 @@ public class prog extends javax.swing.JFrame {
                             }
                             if (rfid.length() >= 3 && rfid.contains("RFID:")) {
                                 rfid = rfid.replace("RFID: ", "");
+                                System.out.println("rfid:" + rfid);
                                 for (int i = 0; i < deb.size(); i++) {
                                     if (deb.get(i).rfid.equals(rfid)) {
                                         if (deb.get(i).torolheto()) {
@@ -189,6 +190,7 @@ public class prog extends javax.swing.JFrame {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        System.out.println("mehet: " + mehet);
                         if (mehet) {
 
                             System.out.println("serial: " + rfid);

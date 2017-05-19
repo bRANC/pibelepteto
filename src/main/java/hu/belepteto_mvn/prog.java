@@ -163,10 +163,13 @@ public class prog extends javax.swing.JFrame {
                 pontosido.setText(dbb.idoegyseg);
                 try {
                     while (data.hasNextLine()) {
-                        System.out.println("data: " + data);
                         boolean mehet = true;
                         try {
                             rfid = (data.nextLine()).trim();
+                            try {
+                                System.out.println("data: " + rfid);
+                            } catch (Exception e) {
+                            }
                             if (rfid.length() >= 3 && rfid.contains("RFID:")) {
                                 rfid = rfid.replace("RFID: ", "");
                                 for (int i = 0; i < deb.size(); i++) {
@@ -250,7 +253,7 @@ public class prog extends javax.swing.JFrame {
                             }
                         }
                     }
-                    System.out.println("data2" + (Integer.parseInt(dbb.ora) < 5) + "  " + (Integer.parseInt(dbb.ora) > 22));
+                    //System.out.println("data2" + (Integer.parseInt(dbb.ora) < 5) + "  " + (Integer.parseInt(dbb.ora) > 22));
                     if (Integer.parseInt(dbb.ora) < 5 || Integer.parseInt(dbb.ora) > 22) {
                         if (dbb.me == false) {
                             System.out.println("data3");
